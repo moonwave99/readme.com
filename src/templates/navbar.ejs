@@ -1,0 +1,11 @@
+<input class="checkbox" type="checkbox" id="menu-toggle" aria-label="Toggle Navigation" />
+<label class="hamburger" for="menu-toggle">
+  <span class="slice"></span>
+  <span class="slice"></span>
+  <span class="slice"></span>
+</label>
+<nav>
+  {% sections.forEach(({ id, title }) => { %}
+  <a href="#{%= id %}">{%= title %}</a>
+  {% }) %}
+</nav>
