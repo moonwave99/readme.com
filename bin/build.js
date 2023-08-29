@@ -23,5 +23,5 @@ const { argv } = yargs(hideBin(process.argv))
     path.isAbsolute(value) ? value : path.join(process.cwd(), value)
   );
 
-const data = await parse({ ...argv });
+const data = await parse(argv);
 await render({ ...data, ...argv });
