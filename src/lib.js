@@ -5,7 +5,6 @@ import matter from 'gray-matter';
 import { marked } from 'marked';
 import { gfmHeadingId } from 'marked-gfm-heading-id';
 import ejs from 'ejs';
-import prettify from 'html-prettify';
 import * as cheerio from 'cheerio';
 
 marked.use(gfmHeadingId());
@@ -78,14 +77,22 @@ export async function render({
     ...(await parseTemplates(templatePath, ejsOptions)),
   };
 
-  const output = templates.main({
+  const data = {
+    title: '',
+    description: '',
+    copyright: 'ACME',
+    links: {},
     ...meta,
-    meta: templates.meta({ ...meta }),
+  };
+
+  const output = templates.main({
+    ...data,
+    meta: templates.meta(data),
     body: sections.map(templates.section).join('\n'),
     navbar: templates.navbar({ sections }),
-    footer: templates.footer({ ...meta }),
+    footer: templates.footer(data),
   });
 
   const outputPath = path.join(distPath, 'index.html');
-  await fs.writeFile(outputPath, prettify(output));
+  await fs.writeFile(outputPath, output);
 }
