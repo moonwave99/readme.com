@@ -1,0 +1,23 @@
+{
+    "name": "readme.com",
+    "version": "0.0.1",
+    "description": "Minimal website generator",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "example": "cd example && node index.js",
+        "example:serve": "cd example && npx vite"
+    },
+    "keywords": [],
+    "author": "Diego Caponera <diego.caponera@gmail.com>",
+    "license": "ISC",
+    "dependencies": {
+        "ejs": "^3.1.9",
+        "fs-extra": "^11.1.1",
+        "globby": "^13.2.2",
+        "gray-matter": "^4.0.3",
+        "html-prettify": "^1.0.7",
+        "marked": "^7.0.5"
+    }
+}
