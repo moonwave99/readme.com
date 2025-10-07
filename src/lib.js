@@ -62,7 +62,6 @@ export async function parse({ readmePath = "./README.md" }) {
 export async function render({
   sections,
   meta,
-  highlightCode,
   distPath = "./dist",
   assetsPath = "./assets",
   templatePath,
