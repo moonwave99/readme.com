@@ -1,8 +1,6 @@
 <footer>
   <span>&copy; {%= copyright %}</span>
   {% if(homepage){ %}
-  <a href="{%= homepage %}">
-    {%= homepage.includes('github.com') ? 'Github' : 'Homepage' %}
-  </a>
+  <a href="{%= homepage %}">{%= homepage.includes('github.com') ? 'Github' : 'Homepage' %}</a>
   {% } %}
 </footer>

@@ -1,6 +1,6 @@
 {
   "name": "readme.com",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Minimal website generator",
   "main": "index.js",
   "type": "module",
@@ -13,6 +13,7 @@
     "assets"
   ],
   "scripts": {
+    "test": "npx vitest --config vite.test.config.js",
     "build:site": "rm -rf dist && node ./bin/build.js",
     "dev:site": "npx concurrently 'npx serve dist' 'npx nodemon --watch readme.md --ext js,ejs --watch src --exec npm run build:site'"
   },
@@ -36,5 +37,9 @@
     "marked": "^7.0.5",
     "marked-gfm-heading-id": "^3.0.6",
     "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@moonwave99/test-fs": "^0.0.5",
+    "vitest": "^3.2.4"
   }
 }

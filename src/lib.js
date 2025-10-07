@@ -50,7 +50,7 @@ function parseMarkdown(content) {
   ];
 }
 
-export async function parse({ readmePath = "./README.md" }) {
+export async function parse({ readmePath } = { readmePath: "./README.md" }) {
   const readme = await fs.readFile(readmePath, "utf8");
   const { content, data: meta } = matter(readme);
   return {
@@ -62,6 +62,7 @@ export async function parse({ readmePath = "./README.md" }) {
 export async function render({
   sections,
   meta,
+  cwd = process.cwd(),
   distPath = "./dist",
   assetsPath = "./assets",
   templatePath,
@@ -94,7 +95,7 @@ export async function render({
   };
 
   try {
-    const pkg = await fs.readJSON("./package.json");
+    const pkg = await fs.readJSON(path.join(cwd, "package.json"));
     info = { ...info, ...pkg };
     config = { ...config, ...(pkg["readme.com"] || {}) };
   } catch (error) {
