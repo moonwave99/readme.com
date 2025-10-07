@@ -72,7 +72,10 @@ export async function render({
   },
 }) {
   const templates = {
-    ...(await parseTemplates(path.join(__dirname, "templates"), ejsOptions)),
+    ...(await parseTemplates(
+      path.join(import.meta.dirname, "templates"),
+      ejsOptions
+    )),
     ...(await parseTemplates(templatePath, ejsOptions)),
   };
 
