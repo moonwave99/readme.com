@@ -106,6 +106,7 @@ section h2 {
 section p code {
   font-size: 1.2em;
   font-weight: bold;
+  color: var(--accent-color);
 }
 
 pre {
@@ -158,6 +159,30 @@ footer {
 .hamburger,
 .checkbox {
   display: none;
+}
+
+table {
+  tbody tr {
+    &:nth-child(odd) {
+      background-color: rgba(0, 0, 0, 0.15);
+    }
+  }
+  th {
+    text-align: left;
+  }
+  th,
+  td {
+    font-size: 0.9rem;
+    line-height: 1.5rem;
+    padding: 0.5rem;
+    &:not(:last-child) {
+      padding-right: 1em;
+    }
+  }
+  code {
+    color: var(--accent-color);
+    font-weight: bold;
+  }
 }
 
 @media screen and (max-width: 600px) {

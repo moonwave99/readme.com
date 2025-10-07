@@ -23,11 +23,61 @@ dist
   styles.css
 ```
 
+The `styles.css` file provides minimal page styling. You can override it by providing your styles, see below for how to use the `assetsPath` option.
+
+### Automatic content arrangement
+
+The markdown contents are split at the `---` delimiters and organized in `<section>`, e.g. the following:
+
+```md
+# My Document
+
+Some text
+
+---
+
+## About
+
+Some more text
+
+---
+
+## Contact
+
+Some further text
+```
+
+Will output:
+
+```html
+<nav>
+  <a href="#top">Home</a>
+  <a href="#some-content">About</a>
+  <a href="#some-more-content">Contact</a>>
+</nav>
+<main>
+  <section class="top">
+    <h1 id="my-document">My Document</h1>
+    <p>Some text</p>
+  </section>
+  <section class="about">
+    <h2 id="about">About</h2>
+    <p>Some more text</p>
+  </section>
+  <section class="contact">
+    <h2 id="contact">Contact</h2>
+    <p>Some further text</p>
+  </section>
+</main>
+```
+
+The `<nav>` is populated accordingly to the content.
+
 ### Local development
 
 You can add the following scripts to your `package.json` in order to test the output locally and eventually building it:
 
-```json
+```js
 {
   "scripts": {
     "dev:site": "npx concurrently 'npx serve site' 'npx nodemon --watch readme.md --exec npm run build:site'",
@@ -48,6 +98,7 @@ Any files contained in the `assets` folder will be copied over to the dist folde
 ```txt
 assets
   robots.txt
+  styles.css
   image.jpg
 README.md
 ```
@@ -57,7 +108,7 @@ Yields:
 ```txt
 dist
   index.html
-  styles.css
+  styles.css  // overwritten
   robots.txt
   image.jpg
 ```
@@ -117,9 +168,36 @@ Options:
   --assetsPath    assets path
 ```
 
+### Programmatic usage
+
+```js
+import { parse, render } from "readme.com";
+
+const { sections, meta } = await parse({
+  readmePath: "...", // path to your readme file, defaults to ./README.md
+});
+
+await render({
+  sections,
+  meta,
+  // additional options here
+});
+```
+
+### Render function options
+
+| Name           | Default value                                | Description                                                           |
+| -------------- | -------------------------------------------- | --------------------------------------------------------------------- |
+| `cwd`          | `process.cwd`                                | Used to retrieve the `package.json` file                              |
+| `distPath`     | `./dist`                                     | The output folder                                                     |
+| `assetsPath`   | `./assets`                                   | Additional assets folder                                              |
+| `templatePath` | `null`                                       | Custom templates folder                                               |
+| `ejsOptions`   | `{ openDelimiter: "{", closeDelimiter: "}"}` | EJS configuration (in case you provide different formatted templates) |
+
 ---
 
 ## Examples
 
 - this page!
 - [homepage example](https://moonwave99.github.io/readme.com.example/)
+- [test-fs](https://moonwave99.github.io/test-fs/)
