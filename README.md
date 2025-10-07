@@ -46,4 +46,4 @@ Options:
 ## Examples
 
 - this page!
-- [homepage example](https://readme-com-example.vercel.app/)
+- [homepage example](https://moonwave99.github.io/readme.com.example/)
