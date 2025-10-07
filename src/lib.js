@@ -98,6 +98,15 @@ export async function render({
 
   const outputPath = path.join(distPath, "index.html");
   await fs.outputFile(outputPath, output);
+
+  const defaultAssetsPath = path.resolve(
+    new URL(`./templates`, import.meta.url).pathname,
+    "..",
+    "assets"
+  );
+
+  await fs.copy(defaultAssetsPath, distPath);
+
   if (fs.existsSync(assetsPath)) {
     await fs.copy(assetsPath, distPath);
   }
