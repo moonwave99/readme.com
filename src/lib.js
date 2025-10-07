@@ -98,5 +98,7 @@ export async function render({
 
   const outputPath = path.join(distPath, "index.html");
   await fs.outputFile(outputPath, output);
-  await fs.copy(assetsPath, distPath);
+  if (fs.existsSync(assetsPath)) {
+    await fs.copy(assetsPath, distPath);
+  }
 }
