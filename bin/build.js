@@ -18,12 +18,14 @@ const { argv } = yargs(hideBin(process.argv))
   })
   .option("templatePath", {
     describe: "custom templates path",
+    default: path.join(process.cwd(), "templates"),
   })
   .coerce("templatePath", (value) =>
     path.isAbsolute(value) ? value : path.join(process.cwd(), value)
   )
   .option("assetsPath", {
     describe: "assets path",
+    default: path.join(process.cwd(), "assets"),
   })
   .coerce("assetsPath", (value) =>
     path.isAbsolute(value) ? value : path.join(process.cwd(), value)

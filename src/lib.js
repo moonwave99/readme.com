@@ -126,8 +126,7 @@ export async function render({
   await fs.outputFile(outputPath, output);
 
   const defaultAssetsPath = path.resolve(
-    new URL(`./templates`, import.meta.url).pathname,
-    "..",
+    new URL(".", import.meta.url).pathname,
     "..",
     "assets"
   );

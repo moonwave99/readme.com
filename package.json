@@ -1,6 +1,6 @@
 {
   "name": "readme.com",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Minimal website generator",
   "main": "index.js",
   "type": "module",
@@ -13,8 +13,8 @@
     "assets"
   ],
   "scripts": {
-    "build": "rm -rf dist && node ./bin/build.js",
-    "dev:site": "npx concurrently 'npx serve dist' 'npx nodemon --watch readme.md --ext js,ejs --watch src --exec npm run build'"
+    "build:site": "rm -rf dist && node ./bin/build.js",
+    "dev:site": "npx concurrently 'npx serve dist' 'npx nodemon --watch readme.md --ext js,ejs --watch src --exec npm run build:site'"
   },
   "keywords": [
     "markdown",
