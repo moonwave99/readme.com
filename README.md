@@ -21,6 +21,24 @@ dist
   styles.css
 ```
 
+### Local development
+
+You can add the following scripts to your `package.json` in order to test the output locally and eventually building it:
+
+```json
+{
+  "scripts": {
+    "dev:site": "npx concurrently 'npx serve site' 'npx nodemon --watch readme.md --exec npm run build:site'",
+    "build:site": "rm -rf site && npx readme.com"
+  }
+}
+```
+
+- run `npm run dev:site` to see a preview at http://localhost:3000;
+- run `npm run dev:build` to generate the website inside the `distPath` folder (defaults to `'./dist`).
+
+If you want to deploy your website to [Github Pages](https://docs.github.com/en/pages), configure your repo accordingly and set up an action [like the one used by this library](./.github/workflows/github-pages.yml).
+
 ### Include assets
 
 Any files contained in the `assets` folder will be copied over to the dist folder and then available at the same level of the `index.html` file, i.e.:
