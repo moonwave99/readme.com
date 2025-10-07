@@ -134,6 +134,9 @@ footer {
 .top p {
   font-size: 3rem;
   color: black;
+  &:has(a):has(img) {
+    font-size: 1rem;
+  }
 }
 
 .top strong,

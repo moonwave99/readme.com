@@ -1,5 +1,7 @@
 # Readme.com
 
+[![Build Status](https://github.com/moonwave99/readme.com/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/moonwave99/readme.com/actions?workflow=Test)
+
 From `README.md`  
 to `index.html` in one touch
 
