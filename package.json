@@ -12,7 +12,7 @@
     "src"
   ],
   "scripts": {
-    "build": "node ./bin/build.js"
+    "build": "rm -rf dist && node ./bin/build.js"
   },
   "keywords": [
     "markdown",
