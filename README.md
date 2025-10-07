@@ -84,9 +84,9 @@ npx readme.com --templatePath ./my-templates-path
 ### Command Line
 
 ```txt
-readme
+npx readme.com
 
-generates the html
+Generates an HTML document from a README.md file
 
 Options:
   --help          Show help                                            [boolean]

@@ -6,8 +6,12 @@ import { parse, render } from "../src/index.js";
 import yargs from "yargs/yargs";
 import { hideBin } from "yargs/helpers";
 
+function coercePath(value) {
+  return path.isAbsolute(value) ? value : path.join(process.cwd(), value);
+}
+
 const { argv } = yargs(hideBin(process.argv))
-  .command("$0", "generates the html")
+  .command("$0", "Generates an HTML document from a README.md file")
   .option("readmePath", {
     describe: "README path",
     default: path.join(process.cwd(), "README.md"),
@@ -16,20 +20,17 @@ const { argv } = yargs(hideBin(process.argv))
     describe: "dist path",
     default: path.join(process.cwd(), "dist"),
   })
+  .coerce("distPath", coercePath)
   .option("templatePath", {
     describe: "custom templates path",
     default: path.join(process.cwd(), "templates"),
   })
-  .coerce("templatePath", (value) =>
-    path.isAbsolute(value) ? value : path.join(process.cwd(), value)
-  )
+  .coerce("templatePath", coercePath)
   .option("assetsPath", {
     describe: "assets path",
     default: path.join(process.cwd(), "assets"),
   })
-  .coerce("assetsPath", (value) =>
-    path.isAbsolute(value) ? value : path.join(process.cwd(), value)
-  );
+  .coerce("assetsPath", coercePath);
 
 const data = await parse(argv);
 await render({ ...data, ...argv });

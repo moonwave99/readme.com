@@ -38,11 +38,11 @@ function parseMarkdown(content) {
       title: "Home",
       content: split[0],
     },
-    ...split.slice(1).map((html) => {
-      const $ = cheerio.load(html);
+    ...split.slice(1).map((content) => {
+      const $ = cheerio.load(content);
       const title = $("h2");
       return {
-        content: html,
+        content,
         id: title.attr("id"),
         title: title.text(),
       };
