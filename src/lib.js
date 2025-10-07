@@ -92,6 +92,8 @@ export async function render({
     body: sections.map(templates.section).join("\n"),
     navbar: templates.navbar({ sections }),
     footer: templates.footer(data),
+    scripts: templates.scripts(data),
+    styles: templates.styles(data),
   });
 
   const outputPath = path.join(distPath, "index.html");
