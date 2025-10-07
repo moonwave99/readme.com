@@ -1,4 +1,8 @@
 <footer>
-  <span>&copy; {%= new Date().getFullYear() %} {%= copyright %}</span>
-  <a href="{%= links.github %}">Github</a>
+  <span>&copy; {%= copyright %}</span>
+  {% if(homepage){ %}
+  <a href="{%= homepage %}">
+    {%= homepage.includes('github.com') ? 'Github' : 'Homepage' %}
+  </a>
+  {% } %}
 </footer>

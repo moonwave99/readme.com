@@ -78,11 +78,37 @@ export async function render({
     ...(await parseTemplates(templatePath, ejsOptions)),
   };
 
+  let info = {
+    name: "My Project",
+    description: "An awesome idea",
+    homepage: "https://www.acme.com/my-project",
+    author: {
+      name: "ACME",
+      email: "hello@acme.com",
+      url: "https://www.acme.com",
+    },
+  };
+
+  let config = {
+    syntaxHighlight: true,
+  };
+
+  try {
+    const pkg = await fs.readJSON("./package.json");
+    info = { ...info, ...pkg };
+    config = { ...config, ...(pkg["readme.com"] || {}) };
+  } catch (error) {
+    console.log("package.json file not found");
+  }
+
   const data = {
-    title: "",
-    description: "",
-    copyright: "ACME",
-    links: {},
+    title: info.name,
+    description: info.description,
+    copyright: `${new Date().getFullYear()} ${
+      info.author?.name || info.author
+    }`,
+    homepage: info.homepage,
+    config,
     ...meta,
   };
 

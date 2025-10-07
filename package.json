@@ -1,6 +1,6 @@
 {
   "name": "readme.com",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Minimal website generator",
   "main": "index.js",
   "type": "module",
@@ -13,13 +13,19 @@
     "assets"
   ],
   "scripts": {
-    "build": "rm -rf dist && node ./bin/build.js"
+    "build": "rm -rf dist && node ./bin/build.js",
+    "dev:site": "npx concurrently 'npx serve dist' 'npx nodemon --watch readme.md --ext js,ejs --watch src --exec npm run build'"
   },
   "keywords": [
     "markdown",
     "static-generator"
   ],
-  "author": "Diego Caponera <diego.caponera@gmail.com>",
+  "homepage": "https://github.com/moonwave99/readme.com",
+  "author": {
+    "name": "Diego Caponera",
+    "email": "hello@diegocaponera.com",
+    "url": "https://www.diegocaponera.com"
+  },
   "license": "ISC",
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",

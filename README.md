@@ -1,10 +1,3 @@
----
-title: Readme.com - Minimal website generator
-copyright: Diego Caponera
-links:
-  github: https://github.com/moonwave99/readme.com
----
-
 # Readme.com
 
 From `README.md`  
