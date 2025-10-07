@@ -105,8 +105,8 @@ section h2 {
 
 section p code,
 section ul code,
-section ol code
-section table code{
+section ol code,
+section table code {
   font-size: 1.2em;
   font-weight: bold;
   color: var(--accent-color);
