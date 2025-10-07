@@ -4,6 +4,7 @@ copyright: Diego Caponera
 links:
   github: https://github.com/moonwave99/readme.com
 ---
+
 # Readme.com
 
 From `README.md`  
@@ -15,7 +16,7 @@ to `index.html` in one touch
 
 Install it globally:
 
-```bash
+```txt
 npm i -g readme.com
 ```
 

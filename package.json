@@ -1,6 +1,6 @@
 {
   "name": "readme.com",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Minimal website generator",
   "main": "index.js",
   "type": "module",
@@ -12,9 +12,7 @@
     "src"
   ],
   "scripts": {
-    "site:html": "node ./bin/build.js --distPath ./site",
-    "site:build": "npm run site:html && vite build site",
-    "site:dev": "npx vite"
+    "build": "node ./bin/build.js"
   },
   "keywords": [
     "markdown",
@@ -31,10 +29,5 @@
     "marked": "^7.0.5",
     "marked-gfm-heading-id": "^3.0.6",
     "yargs": "^17.7.2"
-  },
-  "devDependencies": {
-    "prismjs": "^1.29.0",
-    "vite": "^4.4.9",
-    "vite-plugin-watch": "^0.2.0"
   }
 }

@@ -1,11 +1,11 @@
-import path from 'path';
-import fs from 'fs-extra';
-import { globby } from 'globby';
-import matter from 'gray-matter';
-import { marked } from 'marked';
-import { gfmHeadingId } from 'marked-gfm-heading-id';
-import ejs from 'ejs';
-import * as cheerio from 'cheerio';
+import path from "path";
+import fs from "fs-extra";
+import { globby } from "globby";
+import matter from "gray-matter";
+import { marked } from "marked";
+import { gfmHeadingId } from "marked-gfm-heading-id";
+import ejs from "ejs";
+import * as cheerio from "cheerio";
 
 marked.use(gfmHeadingId());
 
@@ -14,14 +14,14 @@ async function parseTemplates(templatesPath, options) {
     return {};
   }
 
-  const templateFiles = await globby('*.ejs', { cwd: templatesPath });
+  const templateFiles = await globby("*.ejs", { cwd: templatesPath });
 
   return (
     await Promise.all(
       templateFiles.map(async (fileName) => ({
-        id: path.basename(fileName, '.ejs'),
+        id: path.basename(fileName, ".ejs"),
         template: ejs.compile(
-          await fs.readFile(path.join(templatesPath, fileName), 'utf8'),
+          await fs.readFile(path.join(templatesPath, fileName), "utf8"),
           options
         ),
       }))
@@ -30,28 +30,28 @@ async function parseTemplates(templatesPath, options) {
 }
 
 function parseMarkdown(content) {
-  const split = marked(content).split('<hr>');
+  const split = marked(content).split("<hr>");
 
   return [
     {
-      id: 'top',
-      title: 'Home',
+      id: "top",
+      title: "Home",
       content: split[0],
     },
     ...split.slice(1).map((html) => {
       const $ = cheerio.load(html);
-      const title = $('h2');
+      const title = $("h2");
       return {
         content: html,
-        id: title.attr('id'),
+        id: title.attr("id"),
         title: title.text(),
       };
     }),
   ];
 }
 
-export async function parse({ readmePath = './README.md' }) {
-  const readme = await fs.readFile(readmePath, 'utf8');
+export async function parse({ readmePath = "./README.md" }) {
+  const readme = await fs.readFile(readmePath, "utf8");
   const { content, data: meta } = matter(readme);
   return {
     sections: parseMarkdown(content),
@@ -62,11 +62,13 @@ export async function parse({ readmePath = './README.md' }) {
 export async function render({
   sections,
   meta,
-  distPath = './dist',
+  highlightCode,
+  distPath = "./dist",
+  assetsPath = "./assets",
   templatePath,
   ejsOptions = {
-    openDelimiter: '{',
-    closeDelimiter: '}',
+    openDelimiter: "{",
+    closeDelimiter: "}",
   },
 }) {
   const templates = {
@@ -78,9 +80,9 @@ export async function render({
   };
 
   const data = {
-    title: '',
-    description: '',
-    copyright: 'ACME',
+    title: "",
+    description: "",
+    copyright: "ACME",
     links: {},
     ...meta,
   };
@@ -88,11 +90,12 @@ export async function render({
   const output = templates.main({
     ...data,
     meta: templates.meta(data),
-    body: sections.map(templates.section).join('\n'),
+    body: sections.map(templates.section).join("\n"),
     navbar: templates.navbar({ sections }),
     footer: templates.footer(data),
   });
 
-  const outputPath = path.join(distPath, 'index.html');
-  await fs.writeFile(outputPath, output);
+  const outputPath = path.join(distPath, "index.html");
+  await fs.outputFile(outputPath, output);
+  await fs.copy(assetsPath, distPath);
 }
