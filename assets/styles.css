@@ -103,7 +103,10 @@ section h2 {
   font-size: 2rem;
 }
 
-section p code {
+section p code,
+section ul code,
+section ol code
+section table code{
   font-size: 1.2em;
   font-weight: bold;
   color: var(--accent-color);
@@ -178,10 +181,6 @@ table {
     &:not(:last-child) {
       padding-right: 1em;
     }
-  }
-  code {
-    color: var(--accent-color);
-    font-weight: bold;
   }
 }
 
