@@ -31,23 +31,16 @@ jobs:
         run: pnpm build
 
       - name: Build website
-        run: npm run build:site
-
-      - name: Upload website
-        uses: actions/upload-pages-artifact@v3
-        with:
-          name: website
-          path: out
+        run: pnpm build:site
 
       - name: Build example
         working-directory: examples/personal-website
-        run: npm run build:site
+        run: pnpm build:site --outputPath out/examples/personal-website
 
-      - name: Upload example
+      - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          name: example
-          path: examples/personal-website/out
+          path: out
 
   deploy:
     name: Deploy to GitHub Pages
