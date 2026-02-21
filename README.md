@@ -87,7 +87,7 @@ You can add the following scripts to your `package.json` in order to test the ou
 ```
 
 - run `npm run dev:site` to see a preview at http://localhost:3000;
-- run `npm run dev:build` to generate the website inside the `distPath` folder (defaults to `'./dist`).
+- run `npm run dev:build` to generate the website inside the `outputPath` folder (defaults to `'./dist`).
 
 If you want to deploy your website to [Github Pages](https://docs.github.com/en/pages), configure your repo accordingly and set up an action [like the one used by this library](./.github/workflows/github-pages.yml).
 
@@ -142,10 +142,10 @@ README.md
 
 And your custom footer will be used **instead** of the existing one.
 
-The custom templates folder is configurable via the `templatePath` option:
+The custom templates folder is configurable via the `templatesPaths` option:
 
 ```txt
-npx readme.com --templatePath ./my-templates-path
+npx readme.com --templatesPaths ./my-templates-path
 ```
 
 ---
@@ -160,12 +160,12 @@ npx readme.com
 Generates an HTML document from a README.md file
 
 Options:
-  --help          Show help                                            [boolean]
-  --version       Show version number                                  [boolean]
-  --readmePath    README path               [default: "{process.cwd}/README.md"]
-  --distPath      dist path                           [default: "{process.cwd}"]
-  --templatePath  custom templates path     [default: "{process.cwd}/templates"]
-  --assetsPath    assets path
+  --help            Show help                                            [boolean]
+  --version         Show version number                                  [boolean]
+  --readmePath      README path               [default: "{process.cwd}/README.md"]
+  --outputPath      dist path                 [default: "{process.cwd}"]
+  --templatesPaths  custom templates path
+  --assetsPath      assets path               [default: "{process.cwd}/assets"]
 ```
 
 ### Programmatic usage
@@ -186,13 +186,13 @@ await render({
 
 ### Render function options
 
-| Name           | Default value                                | Description                                                           |
-| -------------- | -------------------------------------------- | --------------------------------------------------------------------- |
-| `cwd`          | `process.cwd`                                | Used to retrieve the `package.json` file                              |
-| `distPath`     | `./dist`                                     | The output folder                                                     |
-| `assetsPath`   | `./assets`                                   | Additional assets folder                                              |
-| `templatePath` | `null`                                       | Custom templates folder                                               |
-| `ejsOptions`   | `{ openDelimiter: "{", closeDelimiter: "}"}` | EJS configuration (in case you provide different formatted templates) |
+| Name             | Default value                                | Description                                                           |
+| ---------------- | -------------------------------------------- | --------------------------------------------------------------------- |
+| `cwd`            | `process.cwd`                                | Used to retrieve the `package.json` file                              |
+| `outputPath`     | `./dist`                                     | The output folder                                                     |
+| `assetsPath`     | `./assets`                                   | Additional assets folder                                              |
+| `templatesPaths` | `null`                                       | Custom templates folder                                               |
+| `ejsOptions`     | `{ openDelimiter: "{", closeDelimiter: "}"}` | EJS configuration (in case you provide different formatted templates) |
 
 ---
 

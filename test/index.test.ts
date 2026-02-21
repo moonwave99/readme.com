@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import path from "node:path";
 import fs from "fs-extra";
 import { testFs } from "@moonwave99/test-fs";
@@ -50,7 +51,7 @@ describe("parse function", () => {
       {
         "README.md": readme,
       },
-      context.task.id
+      context.task.id,
     );
 
     const output = await parse({
@@ -92,7 +93,7 @@ describe("parse function", () => {
       {
         "README.md": readmeWithFrontMatter,
       },
-      context.task.id
+      context.task.id,
     );
 
     const output = await parse({
@@ -137,34 +138,34 @@ describe("render function", () => {
         "README.md": readme,
         "package.json": {},
       },
-      context.task.id
+      context.task.id,
     );
 
     const parsed = await parse();
     await render({
       ...parsed,
       cwd: directory,
-      distPath: path.join(directory, "dist"),
+      outputPath: path.join(directory, "dist"),
     });
 
     await Promise.all(
       ["index.html", "styles.css"].map(async (fileName) =>
         expect(await fs.exists(path.join(directory, "dist", fileName))).toBe(
-          true
-        )
-      )
+          true,
+        ),
+      ),
     );
 
     const output = await fs.readFile(
       path.join(directory, "dist", "index.html"),
-      "utf8"
+      "utf8",
     );
 
     const $ = cheerio.load(output);
 
     expect($("title").text()).toBe("My Project");
     expect($('meta[name="description"]').attr("content")).toBe(
-      "An awesome idea"
+      "An awesome idea",
     );
 
     parsed.sections.forEach((section, index) => {
@@ -189,30 +190,30 @@ describe("render function", () => {
           homepage: "https://github.com/acme/some-page",
         }),
       },
-      context.task.id
+      context.task.id,
     );
 
     const parsed = await parse();
     await render({
       ...parsed,
       cwd: directory,
-      distPath: path.join(directory, "dist"),
+      outputPath: path.join(directory, "dist"),
     });
 
     const output = await fs.readFile(
       path.join(directory, "dist", "index.html"),
-      "utf8"
+      "utf8",
     );
 
     const $ = cheerio.load(output);
 
     expect($("title").text()).toBe("Custom name");
     expect($('meta[name="description"]').attr("content")).toBe(
-      "Custom description"
+      "Custom description",
     );
 
     expect($("footer a").attr("href")).toBe(
-      "https://github.com/acme/some-page"
+      "https://github.com/acme/some-page",
     );
     expect($("footer a").text()).toBe("Github");
   });
@@ -227,19 +228,19 @@ describe("render function", () => {
           },
         }),
       },
-      context.task.id
+      context.task.id,
     );
 
     const parsed = await parse();
     await render({
       ...parsed,
       cwd: directory,
-      distPath: path.join(directory, "dist"),
+      outputPath: path.join(directory, "dist"),
     });
 
     const output = await fs.readFile(
       path.join(directory, "dist", "index.html"),
-      "utf8"
+      "utf8",
     );
 
     const $ = cheerio.load(output);
@@ -256,20 +257,20 @@ describe("render function", () => {
           "footer.ejs": "<footer>Custom footer</footer>",
         },
       },
-      context.task.id
+      context.task.id,
     );
 
     const parsed = await parse();
     await render({
       ...parsed,
       cwd: directory,
-      distPath: path.join(directory, "dist"),
-      templatePath: path.join(directory, "templates"),
+      outputPath: path.join(directory, "dist"),
+      templatesPaths: path.join(directory, "templates"),
     });
 
     const output = await fs.readFile(
       path.join(directory, "dist", "index.html"),
-      "utf8"
+      "utf8",
     );
 
     const $ = cheerio.load(output);
@@ -277,26 +278,26 @@ describe("render function", () => {
     expect($("footer").text()).toBe("Custom footer");
   });
 
-  it("generates the document in the custom distPath", async (context) => {
+  it("generates the document in the custom outputPath", async (context) => {
     const directory = await testFs(
       {
         "README.md": readme,
       },
-      context.task.id
+      context.task.id,
     );
 
     const parsed = await parse();
     await render({
       ...parsed,
-      distPath: path.join(directory, "customDist"),
+      outputPath: path.join(directory, "customDist"),
     });
 
     await Promise.all(
       ["index.html", "styles.css"].map(async (fileName) =>
         expect(
-          await fs.exists(path.join(directory, "customDist", fileName))
-        ).toBe(true)
-      )
+          await fs.exists(path.join(directory, "customDist", fileName)),
+        ).toBe(true),
+      ),
     );
   });
 
@@ -308,17 +309,18 @@ describe("render function", () => {
           "robots.txt": "",
         },
       },
-      context.task.id
+      context.task.id,
     );
 
     const parsed = await parse();
     await render({
       ...parsed,
+      outputPath: path.join(directory, "dist"),
       assetsPath: path.join(directory, "customAssets"),
     });
 
     expect(
-      await fs.exists(path.join(directory, "customAssets", "robots.txt"))
+      await fs.exists(path.join(directory, "customAssets", "robots.txt")),
     ).toBe(true);
   });
 });
