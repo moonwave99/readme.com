@@ -18,7 +18,7 @@ npx readme.com
 You'll get:
 
 ```txt
-dist
+out
   index.html
   styles.css
 ```
@@ -87,13 +87,13 @@ You can add the following scripts to your `package.json` in order to test the ou
 ```
 
 - run `npm run dev:site` to see a preview at http://localhost:3000;
-- run `npm run dev:build` to generate the website inside the `outputPath` folder (defaults to `'./dist`).
+- run `npm run dev:build` to generate the website inside the `outputPath` folder (defaults to `'./out`).
 
 If you want to deploy your website to [Github Pages](https://docs.github.com/en/pages), configure your repo accordingly and set up an action [like the one used by this library](./.github/workflows/github-pages.yml).
 
 ### Include assets
 
-Any files contained in the `assets` folder will be copied over to the dist folder and then available at the same level of the `index.html` file, i.e.:
+Any files contained in the `assets` folder will be copied over to the output folder and then be available at the same level of the `index.html` file, i.e.:
 
 ```txt
 assets
@@ -106,7 +106,7 @@ README.md
 Yields:
 
 ```txt
-dist
+out
   index.html
   styles.css  // overwritten
   robots.txt
@@ -163,7 +163,7 @@ Options:
   --help            Show help                                            [boolean]
   --version         Show version number                                  [boolean]
   --readmePath      README path               [default: "{process.cwd}/README.md"]
-  --outputPath      dist path                 [default: "{process.cwd}"]
+  --outputPath      output path               [default: "{process.cwd}"]
   --templatesPaths  custom templates path
   --assetsPath      assets path               [default: "{process.cwd}/assets"]
 ```
@@ -189,7 +189,7 @@ await render({
 | Name             | Default value                                | Description                                                           |
 | ---------------- | -------------------------------------------- | --------------------------------------------------------------------- |
 | `cwd`            | `process.cwd`                                | Used to retrieve the `package.json` file                              |
-| `outputPath`     | `./dist`                                     | The output folder                                                     |
+| `outputPath`     | `./out`                                      | The output folder                                                     |
 | `assetsPath`     | `./assets`                                   | Additional assets folder                                              |
 | `templatesPaths` | `null`                                       | Custom templates folder                                               |
 | `ejsOptions`     | `{ openDelimiter: "{", closeDelimiter: "}"}` | EJS configuration (in case you provide different formatted templates) |
