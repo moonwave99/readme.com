@@ -17,8 +17,8 @@ const { argv } = yargs(hideBin(process.argv))
     default: path.join(process.cwd(), "README.md"),
   })
   .option("outputPath", {
-    describe: "dist path",
-    default: path.join(process.cwd(), "dist"),
+    describe: "output path",
+    default: path.join(process.cwd(), "out"),
   })
   .coerce("outputPath", coercePath)
   .option("templatesPaths", {

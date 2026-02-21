@@ -7,7 +7,7 @@
     "syntaxHighlight": false
   },
   "scripts": {
-    "build:site": "rm -rf out && pnpx readme.com --templatePath templates",
+    "build:site": "rm -rf out && node ../../dist/build.mjs --templatePath templates",
     "dev:site": "pnpx concurrently 'pnpx serve dist' 'pnpx nodemon --watch readme.md --exec pnpm build:site'"
   }
 }
