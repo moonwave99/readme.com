@@ -152,7 +152,6 @@ export async function render({
 
   const defaultAssetsPath = path.resolve(
     new URL(".", import.meta.url).pathname,
-    "..",
     "assets",
   );
 

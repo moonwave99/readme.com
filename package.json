@@ -1,6 +1,6 @@
 {
   "name": "readme.com",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Minimal website generator",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -10,16 +10,14 @@
     "readme.com": "./dist/build.mjs"
   },
   "files": [
-    "bin",
-    "src",
-    "assets"
+    "dist"
   ],
   "scripts": {
     "build": "tsdown",
     "test": "vitest --config vite.test.config.ts",
     "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx",
-    "build:site": "rm -rf out && node ./dist/build.mjs --templatesPaths ./src/templates --outputPath ./out",
-    "dev:site": "pnpx concurrently 'pnpx serve dist' 'pnpx nodemon --watch readme.md --ext js,ejs --watch src --exec npm run build:site'"
+    "build:site": "rm -rf out && node ./dist/build.mjs --outputPath ./out",
+    "dev:site": "pnpx concurrently 'pnpx serve out' 'pnpx nodemon --watch readme.md --ext js,ejs --watch src --exec pnpm build:site'"
   },
   "keywords": [
     "markdown",
