@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 import path from "path";
-import { parse, render } from "../src/index.js";
+import { parse, render, type ParseParams } from ".";
 
 import yargs from "yargs/yargs";
 import { hideBin } from "yargs/helpers";
 
-function coercePath(value) {
+function coercePath(value: string) {
   return path.isAbsolute(value) ? value : path.join(process.cwd(), value);
 }
 
@@ -32,5 +32,5 @@ const { argv } = yargs(hideBin(process.argv))
   })
   .coerce("assetsPath", coercePath);
 
-const data = await parse(argv);
+const data = await parse(argv as ParseParams);
 await render({ ...data, ...argv });

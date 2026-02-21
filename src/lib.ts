@@ -1,17 +1,20 @@
-import path from "path";
+import path from "node:path";
 import fs from "fs-extra";
 import { globby } from "globby";
 import matter from "gray-matter";
 import { marked } from "marked";
 import { gfmHeadingId } from "marked-gfm-heading-id";
-import ejs from "ejs";
+import ejs, { type Options, TemplateFunction } from "ejs";
 import * as cheerio from "cheerio";
 
 marked.use(gfmHeadingId());
 
-async function parseTemplates(templatesPath, options) {
+async function parseTemplates(
+  templatesPath: string,
+  options: Options,
+): Promise<Record<string, TemplateFunction>> {
   if (!templatesPath) {
-    return {};
+    return {} as Record<string, TemplateFunction>;
   }
 
   const templateFiles = await globby("*.ejs", { cwd: templatesPath });
@@ -22,14 +25,14 @@ async function parseTemplates(templatesPath, options) {
         id: path.basename(fileName, ".ejs"),
         template: ejs.compile(
           await fs.readFile(path.join(templatesPath, fileName), "utf8"),
-          options
-        ),
-      }))
+          options,
+        ) as TemplateFunction,
+      })),
     )
   ).reduce((memo, { id, template }) => ({ ...memo, [id]: template }), {});
 }
 
-function parseMarkdown(content) {
+function parseMarkdown(content: string) {
   const split = marked(content).split("<hr>");
 
   return [
@@ -43,14 +46,20 @@ function parseMarkdown(content) {
       const title = $("h2");
       return {
         content,
-        id: title.attr("id"),
+        id: title.attr("id") as string,
         title: title.text(),
       };
     }),
   ];
 }
 
-export async function parse({ readmePath } = { readmePath: "./README.md" }) {
+export type ParseParams = {
+  readmePath: string;
+};
+
+export async function parse(
+  { readmePath }: ParseParams = { readmePath: "./README.md" },
+) {
   const readme = await fs.readFile(readmePath, "utf8");
   const { content, data: meta } = matter(readme);
   return {
@@ -59,24 +68,39 @@ export async function parse({ readmePath } = { readmePath: "./README.md" }) {
   };
 }
 
+export type Section = {
+  id: string;
+  content: string;
+};
+
+export type RenderParams = {
+  sections: Section[];
+  meta: Record<string, unknown>;
+  cwd?: string;
+  outputPath?: string;
+  assetsPath?: string;
+  templatesPaths?: string;
+  ejsOptions?: Options;
+};
+
 export async function render({
   sections,
   meta,
   cwd = process.cwd(),
-  distPath = "./dist",
+  outputPath = "./out",
   assetsPath = "./assets",
-  templatePath,
+  templatesPaths,
   ejsOptions = {
     openDelimiter: "{",
     closeDelimiter: "}",
   },
-}) {
+}: RenderParams) {
   const templates = {
     ...(await parseTemplates(
       path.join(import.meta.dirname, "templates"),
-      ejsOptions
+      ejsOptions,
     )),
-    ...(await parseTemplates(templatePath, ejsOptions)),
+    ...(templatesPaths ? await parseTemplates(templatesPaths, ejsOptions) : {}),
   };
 
   let info = {
@@ -98,7 +122,7 @@ export async function render({
     const pkg = await fs.readJSON(path.join(cwd, "package.json"));
     info = { ...info, ...pkg };
     config = { ...config, ...(pkg["readme.com"] || {}) };
-  } catch (error) {
+  } catch {
     console.log("package.json file not found");
   }
 
@@ -123,18 +147,18 @@ export async function render({
     styles: templates.styles(data),
   });
 
-  const outputPath = path.join(distPath, "index.html");
-  await fs.outputFile(outputPath, output);
+  const outputFileName = path.join(outputPath, "index.html");
+  await fs.outputFile(outputFileName, output);
 
   const defaultAssetsPath = path.resolve(
     new URL(".", import.meta.url).pathname,
     "..",
-    "assets"
+    "assets",
   );
 
-  await fs.copy(defaultAssetsPath, distPath);
+  await fs.copy(defaultAssetsPath, outputPath);
 
   if (fs.existsSync(assetsPath)) {
-    await fs.copy(assetsPath, distPath);
+    await fs.copy(assetsPath, outputPath);
   }
 }
