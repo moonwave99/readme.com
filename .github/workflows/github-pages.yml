@@ -26,6 +26,10 @@ jobs:
 
       - name: Install dependencies
         run: pnpm i
+
+      - name: Build Package
+        run: pnpm build
+
       - name: Build website
         run: npm run build:site
 

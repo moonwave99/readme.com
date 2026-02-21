@@ -7,7 +7,7 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "bin": {
-    "readme.com": "./dist/build.js"
+    "readme.com": "./dist/build.mjs"
   },
   "files": [
     "bin",
