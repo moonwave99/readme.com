@@ -35,7 +35,7 @@ jobs:
 
       - name: Build example
         working-directory: examples/personal-website
-        run: pnpm build:site --outputPath out/examples/personal-website
+        run: pnpm build:site --outputPath ../../out/examples/personal-website
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3

@@ -199,5 +199,5 @@ await render({
 ## Examples
 
 - this page!
-- [homepage example](./examples/personal-website/)
+- [homepage example](./examples/personal-website/README.md)
 - [test-fs](https://moonwave99.github.io/test-fs/)
