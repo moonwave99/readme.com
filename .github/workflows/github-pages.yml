@@ -38,6 +38,15 @@ jobs:
         with:
           path: out
 
+      - name: Build example
+        working-directory: examples/personal-website
+        run: npm run build:site
+
+      - name: Upload Build Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: examples/personal-website/out
+
   deploy:
     name: Deploy to GitHub Pages
     needs: build
