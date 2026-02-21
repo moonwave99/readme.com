@@ -33,7 +33,7 @@ jobs:
       - name: Build website
         run: npm run build:site
 
-      - name: Upload Build Artifact
+      - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
           path: out
@@ -42,7 +42,7 @@ jobs:
         working-directory: examples/personal-website
         run: npm run build:site
 
-      - name: Upload Build Artifact
+      - name: Upload example
         uses: actions/upload-pages-artifact@v3
         with:
           path: examples/personal-website/out
